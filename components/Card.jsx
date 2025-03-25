@@ -6,6 +6,7 @@ const Swiper = () => {
   const [end, setEnd] = useState({x: 0, y: 0})
   const [offset, setOffset] = useState({x: 0, y: 0})
   const [isDragging, setIsDragging] = useState(false)
+  const [visible, setVisible] = useState(true);
   const handleStartTouch = (e) => {
     setIsDragging(true);
     setStart({x: e.touches[0].clientX, y: e.touches[0].clientY})
@@ -32,8 +33,9 @@ const Swiper = () => {
   const handleEnd = (e) => {
     setIsDragging(false);
     setEnd({x: e.clientX, y: e.clientY});
-    setOffset({x: 0, y: 0})
-    
+    if(Math.abs(offset.x) > 150) {
+      setVisible(false);
+    } else setOffset({x: 0, y: 0})
   }
   useEffect(() => {
     const handleGlobalMouseUp = () => {
@@ -54,15 +56,17 @@ const Swiper = () => {
     style={{
       left: offset.x,
       rotate: (offset.x / 10) + 'deg',
+      animation: visible ? 'none' : 'fadeOut 0.5s forwards',
       opacity: 1 - Math.abs(offset.x) / 400,
       backgroundColor: 'black',
-      zIndex: 100
+      zIndex: 100,
     }}
     onMouseDown={handleStart}
     onTouchStart={handleStartTouch}
     onMouseMove={handleMove}
     onTouchMove={handleMoveTouch}
     onTouchEnd={handleEndTouch}
+    onMouseUp={handleEnd}
     >
         Clicked x: {start.x}, y: {start.y} <br/>
         Offset x: {offset.x}, y: {offset.y} <br/>
