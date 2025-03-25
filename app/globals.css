@@ -9,14 +9,6 @@
   initial-value: 0deg;
   inherits: false;
 }
-.border-gradient {
-  position: relative;
-  background: #3a3a3a;
-  border-radius: 10px;
-  padding: 20px; /* Add padding back! */
-  width: 300px;
-  height: 300px;
-}
 
 .border-gradient::before, .border-gradient::after {
   content: '';
@@ -26,6 +18,7 @@
   
   background-image: conic-gradient(from var(--gradient-angle), #833ab4, #fd1d1d, #fcb045, #833ab4);
   border-radius: inherit;
+  pointer-events: none;
   animation: rotation 1s linear infinite
 }
 .border-gradient::after {
